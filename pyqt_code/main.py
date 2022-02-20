@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFile
     QGraphicsScene, QGraphicsView, QGraphicsObject,QDockWidget,QGraphicsLineItem, \
     QGraphicsItemGroup
 from Help_page import help_page
+from Information import Information
+from UserChoice import UserChoice
 
 class Demo(QMainWindow):
     """
@@ -40,6 +42,7 @@ class Demo(QMainWindow):
         self.knowledge_bar = self.addToolBar('knowledge')
         self.help_bar = self.addToolBar('Help')
         self.save_bar = self.addToolBar('Save')
+        self.choice_bar = self.addToolBar('Choice')
 
         self.status_bar = self.statusBar()
 
@@ -48,6 +51,7 @@ class Demo(QMainWindow):
         self.knowledge_action = QAction("knowledge",self)
         self.help_action = QAction("Help",self)
         self.save_action = QAction("Save",self)
+        self.choice_action = QAction("Choice",self)
 
         self.set_center()
 
@@ -72,6 +76,7 @@ class Demo(QMainWindow):
         self.knowledge_bar.addAction(self.knowledge_action)
         self.help_bar.addAction(self.help_action)
         self.save_bar.addAction(self.save_action)
+        self.choice_bar.addWidget(self.choice_action)
 
     def status_bar_init(self):
         self.status_bar.showMessage("Ready to compose")
@@ -105,6 +110,22 @@ class Demo(QMainWindow):
         self.save_action.setToolTip('Save some file')
         self.save_action.setStatusTip('Save some file[Ctrl+S]')
         self.save_action.triggered.connect(self.add_save_function)
+
+        self.choice_action.setShortcut("Ctrl+C")
+        self.choice_action.setToolTip("Choice Something")
+        self.choice_action.setstatusTip("Choice Something[Ctrl+s]")
+        self.choice_action.triggered.connect(self.add_choice)
+
+    def add_choice(self):
+        self.choice_page = UserChoice()
+        self.choice_page.dialog_signal.connect(self.add_choice_deal)
+
+        self.choice_page.show()
+
+    def add_choice_deal(self,Algorithm:str,UserId:int,RecommandNum:int):
+        self.Algorithm = Algorithm
+        self.UserId = UserId
+        self.RecommandNum = RecommandNum
 
     def add_resources(self):
         # 打开json文件 对应resources文件夹
@@ -154,7 +175,7 @@ class Demo(QMainWindow):
             pass
 
     def dock_window_init(self):
-        self.dock_window = QDockWidget('player data',self)
+        pass
 
 
 if __name__ == "__main__":

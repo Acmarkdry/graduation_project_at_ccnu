@@ -45,6 +45,22 @@ class UserChoice(QWidget):
 
     def GetText(self):
         IsOk = 0
+        AlgorithmNum = 0
+        UserIdNum = 0
+        RecommandNumNum = 0
 
         if self.AlgorithmLine.isModified():
-            self
+            AlgorithmNum = int(self.AlgorithmLine.text())
+            IsOk += 1
+
+        if self.RecommandNumLine.isModified():
+            RecommandNumNum = int(self.RecommandNumLine.text())
+            IsOk += 1
+
+        if self.UserIdLine.isModified():
+            UserIdNum = int(self.RecommandNumLine.text())
+            IsOk += 1
+
+        if IsOk == 7:
+            self.dialog_signal.emit(AlgorithmNum,UserIdNum,RecommandNumNum)
+            self.destroy()
