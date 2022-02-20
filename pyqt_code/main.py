@@ -3,10 +3,13 @@ import sys
 
 import numpy
 import pandas
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QMimeData
+from PyQt5.QtGui import QIcon,QMouseEvent,QPainterPath,QKeyEvent
+from PyQt5.QtCore import QMimeData,pyqtSignal,QRectF,QPointF,QPropertyAnimation,Qt,QPoint
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QMessageBox, \
-    QFontDialog, QColorDialog
+    QFontDialog, QColorDialog,QTableWidget,QTableWidgetItem,QAbstractItemView, \
+    QGraphicsScene, QGraphicsView, QGraphicsObject,QDockWidget,QGraphicsLineItem, \
+    QGraphicsItemGroup
+from Help_page import help_page
 
 class Demo(QMainWindow):
     """
@@ -136,7 +139,8 @@ class Demo(QMainWindow):
             self.knowledge_resources = numpy.array(self.knowledge_resources)
 
     def add_help(self):
-        pass
+        self.help_page = help_page()
+        self.help_page.show()
 
     def add_save_function(self):
         file_name,_ = QFileDialog.getSaveFileName(
@@ -148,6 +152,10 @@ class Demo(QMainWindow):
 
         else:
             pass
+
+    def dock_window_init(self):
+        self.dock_window = QDockWidget('player data',self)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
