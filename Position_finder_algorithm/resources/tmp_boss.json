@@ -1,0 +1,9 @@
+{
+  "uid": "Boss",
+  "x": 1,
+  "y": 1,
+  "image": 2,
+  "ask_in_angle": 1,
+  "le_angle": 0,
+  "ri_angle": 6.283185307179586
+}

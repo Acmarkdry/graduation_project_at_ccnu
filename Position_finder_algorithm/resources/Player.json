@@ -1,0 +1,85 @@
+{
+  "player": [
+    {
+      "uid": "1",
+      "x": 1.1,
+      "y": 1.4,
+      "image_radius": 1.1,
+      "attack_radius": 2,
+      "speed": 1
+    },
+    {
+      "uid": "2",
+      "x": 1.1,
+      "y": 1.9,
+      "image_radius": 1.2,
+      "attack_radius": 4,
+      "speed": 2
+    },
+    {
+      "uid": "3",
+      "x": 1.9,
+      "y": -1.4,
+      "image_radius": 1.3,
+      "attack_radius": 3,
+      "speed": 3
+    },
+    {
+      "uid": "4",
+      "x": -1,
+      "y": -1,
+      "image_radius": 1.4,
+      "attack_radius": 4,
+      "speed": 4
+    },
+    {
+      "uid": "5",
+      "x": -5,
+      "y": -5,
+      "image_radius": 1.5,
+      "attack_radius": 5,
+      "speed": 5
+    },
+    {
+      "uid": "6",
+      "x": -1.1,
+      "y": 1,
+      "image_radius": 1.6,
+      "attack_radius": 5,
+      "speed": 6
+    },
+    {
+      "uid": "7",
+      "x": 1,
+      "y": 1.7,
+      "image_radius": 1.7,
+      "attack_radius": 1.9,
+      "speed": 7
+    },
+    {
+      "uid": "8",
+      "x": 4,
+      "y": -1.81,
+      "image_radius": 1.8,
+      "attack_radius": 8,
+      "speed": 9
+    },
+    {
+      "uid": "9",
+      "x": -1.9,
+      "y": 0,
+      "image_radius": 1.2,
+      "attack_radius": 9,
+      "speed": 9
+    },
+    {
+      "uid": "10",
+      "x": 2.8,
+      "y": 2.4,
+      "image_radius": 0.5,
+      "attack_radius": 8,
+      "speed": 10
+    }
+  ]
+}
+
