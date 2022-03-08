@@ -29,9 +29,7 @@ class question_and_answer_page(QWidget):
         self.setLayout(layout)
 
         self.init_ui()
-
         self.finish_button.clicked.connect(self.finish)
-
 
     def init_ui(self):
         file = path

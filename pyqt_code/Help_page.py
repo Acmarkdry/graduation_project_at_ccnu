@@ -1,9 +1,13 @@
 #codeing = utf-8
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QTextEdit, QPushButton, \
-    QGridLayout,QPlainTextEdit,QVBoxLayout,QFileDialog
+    QGridLayout,QPlainTextEdit,QVBoxLayout,QFileDialog,QTextBrowser
+import PyQt5.QtWidgets as QtWidgets
+from PyQt5.QtCore import pyqtSignal
+import urllib
+import chardet
 
-path = '/help.md'
+path = 'help.md'
 
 class help_page(QWidget):
     def __init__(self):
@@ -12,6 +16,7 @@ class help_page(QWidget):
 
         self.setWindowTitle("Help You Know")
         self.help_line = QTextEdit(self)
+        self.text_brow = QTextBrowser()
 
         self.finish_button = QPushButton("Close",self)
 
@@ -29,9 +34,16 @@ class help_page(QWidget):
 
         with open(file,'rb') as f:
             out = f.read().decode('utf-8')
-            self.help_line.setMarkdown(out)
+            self.help_line.setPlainText(out)
 
         self.help_line.setReadOnly(True)
 
     def finish(self):
         self.destroy()
+
+if  __name__ == '__main__':
+    app = QApplication(sys.argv)
+    demo = help_page()
+    demo.show()
+
+    sys.exit(app.exec_())

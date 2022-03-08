@@ -31,9 +31,12 @@ class Demo(QMainWindow):
         self.resize(800,1000)
         # 以上为各插件的初始化
 
+        self.dock_window = QDockWidget("User Data",self);
+
         self.menu_init()
         self.toolbar_init()
         self.status_bar_init()
+        self.dock_window_init()
         self.action_init()
 
     def menu_init(self):
@@ -76,7 +79,7 @@ class Demo(QMainWindow):
         self.knowledge_bar.addAction(self.knowledge_action)
         self.help_bar.addAction(self.help_action)
         self.save_bar.addAction(self.save_action)
-        self.choice_bar.addWidget(self.choice_action)
+        self.choice_bar.addAction(self.choice_action)
 
     def status_bar_init(self):
         self.status_bar.showMessage("Ready to compose")
@@ -113,7 +116,7 @@ class Demo(QMainWindow):
 
         self.choice_action.setShortcut("Ctrl+C")
         self.choice_action.setToolTip("Choice Something")
-        self.choice_action.setstatusTip("Choice Something[Ctrl+s]")
+        self.choice_action.setStatusTip("Choice Something[Ctrl+s]")
         self.choice_action.triggered.connect(self.add_choice)
 
     def add_choice(self):
@@ -137,6 +140,16 @@ class Demo(QMainWindow):
             f.close()
 
             self.student_resources = json.loads(content)
+            self.student_resources_path = file
+            self.student_resources_list = [[0 for j in range(10)] for i in range(81)]
+
+            for i in range(1,81):
+                for j in range(10):
+                    tmp = str(i)
+                    self.student_resources_list[i][j] = self.student_resources[tmp][j]
+
+            self.user_data_form.StudnetPageChanged(self.student_resources_list)
+
         else :
             pass
 
@@ -147,17 +160,42 @@ class Demo(QMainWindow):
         if file:
             self.teacher = pandas.read_csv(file)
             self.teacher = numpy.array(self.teacher)
+            self.teacher_path = file
+
+            self.teacher_list = [[0 for i in range(self.teacher.shape[1])] for i in range(self.teacher.shape[0])]
+
+            self.student_resources = json.loads(content)
+
+            for i in range(self.teacher.shape[0]):
+                for j in range(self.teacher.shape[1]):
+                    self.teacher_list[i][j] = self.teacher[i][j]
+
+            self.user_data_form.TeacherPageChanged(self.teacher_list)
 
         else:
             pass
 
     def add_knowledge(self):
         # 打开csv文件
-        file,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.csv)')
+        file,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.json)')
 
         if file:
-            self.knowledge_resources = pandas.read_csv(file)
-            self.knowledge_resources = numpy.array(self.knowledge_resources)
+            f = open(file,'r')
+            content = f.read()
+            f.close()
+
+            self.knowledge_resources = json.loads(content)
+
+            self.knowledge_path = file
+
+            self.knowledge_resources_list = [[0 for i in range(2)] for i in range(221)]
+
+            for i in range(1,221):
+                tmp = str(i)
+                self.knowledge_resources_list[i][0] = i;
+                self.knowledge_resources_list[i][1] = self.knowledge_resources[tmp]
+
+            self.user_data_form.KnowledgeChanged(self.knowledge_resources_list)
 
     def add_help(self):
         self.help_page = help_page()
@@ -175,8 +213,17 @@ class Demo(QMainWindow):
             pass
 
     def dock_window_init(self):
-        pass
+        self.user_data_form = Information()
 
+        self.dock_window.setAllowedAreas(Qt.AllDockWidgetAreas) # 全部可停靠
+        self.dock_window.setFeatures(QDockWidget.DockWidgetMovable)
+        self.dock_window.setFeatures(QDockWidget.NoDockWidgetFeatures)
+
+        self.dock_window.setWidget(self.user_data_form)
+
+        print(self.dock_window.minimumSize().width())
+        self.dock_window.setFixedWidth(480)
+        self.addDockWidget(Qt.LeftDockWidgetArea,self.dock_window)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

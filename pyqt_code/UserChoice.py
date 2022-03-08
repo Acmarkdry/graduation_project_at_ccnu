@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QTex
     QGridLayout
 from PyQt5.QtCore import pyqtSignal
 import math
+
 class UserChoice(QWidget):
     dialog_signal = pyqtSignal(str,int,int)
 
@@ -53,6 +54,7 @@ class UserChoice(QWidget):
             AlgorithmNum = int(self.AlgorithmLine.text())
             IsOk += 1
 
+
         if self.RecommandNumLine.isModified():
             RecommandNumNum = int(self.RecommandNumLine.text())
             IsOk += 1
@@ -61,6 +63,13 @@ class UserChoice(QWidget):
             UserIdNum = int(self.RecommandNumLine.text())
             IsOk += 1
 
-        if IsOk == 7:
+        if IsOk == 3:
             self.dialog_signal.emit(AlgorithmNum,UserIdNum,RecommandNumNum)
             self.destroy()
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    demo = UserChoice()
+    demo.show()
+
+    sys.exit(app.exec_())

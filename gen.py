@@ -206,8 +206,4 @@ def test_recommand_resources():
     #
     # with open("recommand_resources.json",'w') as f:
     #     json.dump(result,f,indent=4)
-    test = []
-    test.append([4,3])
-    test.append([3,4])
-    test = sorted(test,key = (lambda x:x[1]),reverse=True)
-    print(test)
+
