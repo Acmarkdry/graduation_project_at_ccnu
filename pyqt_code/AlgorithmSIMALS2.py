@@ -365,11 +365,11 @@ def get_recommand_results(knowledge_path: str, action_path: str,
     have_learn = []
 
     resources, knowledge, teacher = read_data_bck(resources_path, knowledge_path, teacher_path)
-    action = read_action(action_path)  # 学生对于不同的知识点采取的行动
-    knowledge_tranfer = read_graph(graph_path)  # 知识点之间的转换概率
+    action = read_action_bck(action_path)  # 学生对于不同的知识点采取的行动
+    knowledge_tranfer = read_graph_bck(graph_path)  # 知识点之间的转换概率
 
     # 获取文件资源
-    simals1 = SIMALS1(resources, knowledge, teacher)  # 初始化
+    simals1 = SIMALS1(resources, knowledge, teacher,knowledge_tranfer)  # 初始化
 
     result = calc_result(simals1, resources, knowledge, user_id)  # 得出来的真实答案
 

@@ -102,7 +102,7 @@ def calc_need_knowledge(pos:int,have_learn:list): #
     # 计算接下来需要学习的知识点，这里是存在问题的，因为我们不知道接下来需要学习的知识点是什么
     # 我们采取平均数的算法吧，就取前40%的知识点掌握程度
     # pos代表我们接下来需要获取的人的名字
-    from ../DKT_model import calc_need_knowledge as need_knowledge
+    from DKT_model import calc_need_knowledge as need_knowledge
 
     knowledge_degree = need_knowledge()
 
@@ -344,8 +344,8 @@ def get_recommand_results(knowledge_path:str,action_path:str,
     have_learn = []
 
     resources,knowledge,teacher = read_data_bck(resources_path,knowledge_path,teacher_path)
-    action = read_action(action_path) # 学生对于不同的知识点采取的行动
-    knowledge_tranfer = read_graph(graph_path) # 知识点之间的转换概率
+    action = read_action_bck(action_path) # 学生对于不同的知识点采取的行动
+    knowledge_tranfer = read_graph_bck(graph_path) # 知识点之间的转换概率
 
     # 获取文件资源
     simals1 = SIMALS1(resources,knowledge,teacher) # 初始化

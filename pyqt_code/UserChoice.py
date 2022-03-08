@@ -25,12 +25,12 @@ class UserChoice(QWidget):
         self.RecommandTeacherNum = QPushButton("TeacherNum",self)
         self.Finish = QPushButton('Finish',self)
 
-        self.AlgorithmLine = QLineEdit(self)
-        self.UserIdLine = QLineEdit(self)
-        self.RecommandNumLine = QLineEdit(self)
-        self.RecommandTeacherLine = QLineEdit(self)
+        self.AlgorithmLine = QLineEdit("SIMALS1",self)
+        self.UserIdLine = QLineEdit("1",self)
+        self.RecommandNumLine = QLineEdit("10",self)
+        self.RecommandTeacherLine = QLineEdit("3",self)
 
-        self.AlgorithmLine.setMaxLength(5)
+        self.AlgorithmLine.setMaxLength(10)
         self.UserIdLine.setMaxLength(5)
         self.RecommandNumLine.setMaxLength(5)
         self.RecommandTeacherLine.setMaxLength(5)
@@ -51,6 +51,7 @@ class UserChoice(QWidget):
         self.Finish.clicked.connect(self.GetText)
 
     def GetText(self):
+        print("hello")
         IsOk = 0
         AlgorithmNum = 0
         UserIdNum = 0

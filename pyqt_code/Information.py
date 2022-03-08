@@ -1,8 +1,9 @@
-
+import random
 import sys
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QTabWidget, QLabel, QLineEdit, QDateEdit, \
     QComboBox, QTextEdit, QGridLayout,QTableWidget,QAbstractItemView,QTableWidgetItem
+import random
 
 from UserChoice import UserChoice
 
@@ -37,36 +38,43 @@ class Information(QTabWidget):
         :param AlgorithmName：使用的算法名称
         :return:
         """
+        while len(vec) < ResourcesNum + TeacherNum:
+            vec.append(random.randint(1,120))
+
         NameLabel = QLabel('Name:',self.UserResult)
         AlgorithmLabel = QLabel('Algorithm:',self.UserResult)
 
-        NameLine = QLineEdit(self.UserResult)
-        AlgorithmLine = QLineEdit(self.UserResult)
+        NameLine = QLineEdit(UserName,self.UserResult)
+        AlgorithmLine = QLineEdit(AlgorithmName,self.UserResult)
 
         Glayout = QGridLayout(NameLabel)
 
-        Glayout.addWidget(NameLabel,0,1,1,1)
-        Glayout.addWidget(NameLine,0,1,1,1)
+        Glayout.addWidget(NameLabel,1,0,1,1)
+        Glayout.addWidget(NameLine,1,1,1,1)
 
-        Glayout.addWidget(AlgorithmLabel,1,0,1,1)
-        Glayout.addWidget(AlgorithmLine,1,1,1,1)
+        Glayout.addWidget(AlgorithmLabel,1,2,1,1)
+        Glayout.addWidget(AlgorithmLine,1,3,1,1)
 
         ResultLabelList = [0 for i in range(len(vec))]
         ResultLineList = [0 for i in range(len(vec))]
         cnt = 2
 
         for i in range(0,ResourcesNum):
-            ResultList[i] = QLabel(str('Resources') + str(i + 1),self.UserResult)
-            ResultLabelList[i] = QLineEdit(self.UserResult)
+            print(cnt)
+            ResultLabelList[i] = QLabel(str('Resources') + str(i + 1),self.UserResult)
+            ResultLineList[i] = QLineEdit(str(vec[i]),self.UserResult)
             Glayout.addWidget(ResultLabelList[i],cnt,0,1,1)
             Glayout.addWidget(ResultLineList[i],cnt,1,1,1)
             cnt += 1
 
+        cnt = 2
+
         for i in range(0,TeacherNum):
-            ResultList[i + ResourcesNum] = QLabel(str('Resources') + str(i + 1),self.UserResult)
-            ResultLabelList[i + ResourcesNum] = QLineEdit(self.UserResult)
-            Glayout.addWidget(ResultLabelList[i],cnt,0,1,1)
-            Glayout.addWidget(ResultLineList[i],cnt,1,1,1)
+            print(cnt)
+            ResultLabelList[i + ResourcesNum] = QLabel(str('Teacher') + str(i + 1),self.UserResult)
+            ResultLineList[i + ResourcesNum] = QLineEdit(str(vec[i + ResourcesNum]),self.UserResult)
+            Glayout.addWidget(ResultLabelList[i + ResourcesNum],cnt,2,1,1)
+            Glayout.addWidget(ResultLineList[i + ResourcesNum],cnt,3,1,1)
             cnt += 1
 
         self.UserResult.setLayout(Glayout)

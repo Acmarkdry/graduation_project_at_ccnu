@@ -190,11 +190,30 @@ class Demo(QMainWindow):
         self.choice_page = UserChoice()
         self.choice_page.dialog_signal.connect(self.add_choice_deal)
 
+        self.exam_score_path = 'D:/graduation_project_at_ccnu/data/data.csv'
+        self.knowledge_conversion_path = 'D:/graduation_project_at_ccnu/graph.csv'
+        self.question_knowledge_path = 'D:/graduation_project_at_ccnu/data/q.csv'
+        self.action_path = 'D:/graduation_project_at_ccnu/action.csv'
+        self.student_resources_path = 'D:/graduation_project_at_ccnu/resources9.json'
+        self.teacher_path = 'D:/graduation_project_at_ccnu/teacher9.csv'
+        self.knowledge_path = 'D:/graduation_project_at_ccnu/knowledge.json'
+
+        self.choice_page.show()
+
         if self.question_knowledge_path != '' and self.exam_score_path != '' and \
             self.action_path != '' and self.knowledge_path != '' and self.teacher_path != '' and self.knowledge_conversion_path != '' and \
             self.student_resources_path != '':
             self.choice_page.show()
-            print(self.exam_score_path,self.knowledge_conversion_path,self.question_knowledge_path,self.action_path,self.student_resources_path,self.teacher_path,self.knowledge_path)
+            """
+            D:/graduation_project_at_ccnu/data/data.csv
+             D:/graduation_project_at_ccnu/graph.csv
+              D:/graduation_project_at_ccnu/data/q.csv
+              D:/graduation_project_at_ccnu/action.csv
+              D:/graduation_project_at_ccnu/resources9.json
+               D:/graduation_project_at_ccnu/teacher9.csv
+                D:/graduation_project_at_ccnu/knowledge.json
+            """
+            # print(self.exam_score_path,self.knowledge_conversion_path,self.question_knowledge_path,self.action_path,self.student_resources_path,self.teacher_path,self.knowledge_path)
 
     def add_choice_deal(self,Algorithm:str,UserId:int,RecommandNum:int,RecommandTeacher):
         # 在这里获取了用户选择了东西 分别是选择的算法 选择的用户id 选择的推荐知识数量 推荐老师数量
@@ -203,9 +222,22 @@ class Demo(QMainWindow):
         self.RecommandNum = RecommandNum
         self.RecommandNumTeacher = RecommandTeacher
 
-        tmp = []
+        print(Algorithm,UserId,RecommandNum,RecommandTeacher)
 
-        self.user_data_form.UserResultPageChange(tmp,0,0,"1","SimAls1")
+        from AlgorithmSIMALS1 import get_recommand_results as SIMALS1
+        from AlgorithmSIMALS2 import get_recommand_results as SIMALS2
+        from AlgorithmSIMALS3 import get_recommand_results as SIMALS3
+
+        ret = []
+
+        if self.Algorithm == 'SIMALS1':
+            ret = SIMALS1(self.knowledge_path,self.action_path,self.knowledge_conversion_path,self.student_resources_path,self.teacher_path,self.UserId)
+        if self.Algorithm == 'SIMALS2':
+            ret = SIMALS2(self.knowledge_path, self.action_path, self.knowledge_conversion_path,self.student_resources_path, self.teacher_path, self.UserId)
+        if self.Algorithm == 'SIMALS3':
+            ret = SIMALS3(self.knowledge_path, self.action_path, self.knowledge_conversion_path,self.student_resources_path, self.teacher_path, self.UserId)
+
+        self.user_data_form.UserResultPageChange(ret,RecommandNum,RecommandTeacher,str(UserId),Algorithm)
 
     def add_resources(self):
         # 打开json文件 对应resources文件夹

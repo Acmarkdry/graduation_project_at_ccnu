@@ -288,7 +288,7 @@ def calc_result(simals1:SIMALS1,tmp1:dict,tmp2:list,user_id):
             assert 0
 
         print(result)
-        ans.append(result)
+        ans = result
 
     # ans现在仅仅针对学习资源，对于知识点还没有体现出来
     # teacher还没有搞
@@ -367,8 +367,8 @@ def get_recommand_results(knowledge_path: str, action_path: str,
     have_learn = []
 
     resources, knowledge, teacher = read_data_bck(resources_path, knowledge_path, teacher_path)
-    action = read_action(action_path)  # 学生对于不同的知识点采取的行动
-    knowledge_tranfer = read_graph(graph_path)  # 知识点之间的转换概率
+    action = read_action_bck(action_path)  # 学生对于不同的知识点采取的行动
+    knowledge_tranfer = read_graph_bck(graph_path)  # 知识点之间的转换概率
 
     # 获取文件资源
     simals1 = SIMALS1(resources,knowledge,teacher,knowledge_tranfer,action) # 初始化
