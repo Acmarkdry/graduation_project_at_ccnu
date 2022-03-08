@@ -12,14 +12,64 @@ class Information(QTabWidget):
         self.TeacherInformation = QTableWidget()
         self.StudentInformation = QTableWidget()
         self.KnowledgeInformation = QTableWidget()
+        self.UserResult = QWidget()
 
         self.TeacherPageInit()
         self.StudentPageInit()
         self.KnowledgePageInit()
+        self.UserResultPageInit()
 
         self.addTab(self.TeacherInformation,'Teacher Information')
         self.addTab(self.StudentInformation,'Student Information')
         self.addTab(self.KnowledgeInformation,'Knowledge Information')
+        self.addTab(self.UserResult,'Result Information')
+
+    def UserResultPageInit(self):
+        pass
+
+    def UserResultPageChange(self,vec:list,ResourcesNum,TeacherNum,UserName:str,AlgorithmName:str):
+        """
+
+        :param vec: 推荐资源数组
+        :param ResourcesNum: 推荐的资源数量
+        :param TeacherNum: 推荐的老师数量
+        :param UserName: 用户名称
+        :param AlgorithmName：使用的算法名称
+        :return:
+        """
+        NameLabel = QLabel('Name:',self.UserResult)
+        AlgorithmLabel = QLabel('Algorithm:',self.UserResult)
+
+        NameLine = QLineEdit(self.UserResult)
+        AlgorithmLine = QLineEdit(self.UserResult)
+
+        Glayout = QGridLayout(NameLabel)
+
+        Glayout.addWidget(NameLabel,0,1,1,1)
+        Glayout.addWidget(NameLine,0,1,1,1)
+
+        Glayout.addWidget(AlgorithmLabel,1,0,1,1)
+        Glayout.addWidget(AlgorithmLine,1,1,1,1)
+
+        ResultLabelList = [0 for i in range(len(vec))]
+        ResultLineList = [0 for i in range(len(vec))]
+        cnt = 2
+
+        for i in range(0,ResourcesNum):
+            ResultList[i] = QLabel(str('Resources') + str(i + 1),self.UserResult)
+            ResultLabelList[i] = QLineEdit(self.UserResult)
+            Glayout.addWidget(ResultLabelList[i],cnt,0,1,1)
+            Glayout.addWidget(ResultLineList[i],cnt,1,1,1)
+            cnt += 1
+
+        for i in range(0,TeacherNum):
+            ResultList[i + ResourcesNum] = QLabel(str('Resources') + str(i + 1),self.UserResult)
+            ResultLabelList[i + ResourcesNum] = QLineEdit(self.UserResult)
+            Glayout.addWidget(ResultLabelList[i],cnt,0,1,1)
+            Glayout.addWidget(ResultLineList[i],cnt,1,1,1)
+            cnt += 1
+
+        self.UserResult.setLayout(Glayout)
 
     def TeacherPageInit(self):
         self.TeacherInformation.setRowCount(0)

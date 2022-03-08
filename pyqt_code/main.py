@@ -29,6 +29,15 @@ class Demo(QMainWindow):
 
         #self.resources_bar = self.addToolBar('Resources')
         self.resize(800,1000)
+
+        self.exam_score_path = ''
+        self.knowledge_conversion_path = ''
+        self.question_knowledge_path = ''
+        self.action_path = ''
+        self.student_resources_path = ''
+        self.teacher_path = ''
+        self.knowledge_path = ''
+
         # 以上为各插件的初始化
 
         self.dock_window = QDockWidget("User Data",self);
@@ -47,6 +56,11 @@ class Demo(QMainWindow):
         self.save_bar = self.addToolBar('Save')
         self.choice_bar = self.addToolBar('Choice')
 
+        self.exam_score_bar = self.addToolBar('Exam Score')
+        self.question_knowledge_bar = self.addToolBar('Question Knowledge')
+        self.knowledge_conversion_bar = self.addToolBar('Knowledge Conversion')
+        self.action_bar = self.addToolBar('Student Action')
+
         self.status_bar = self.statusBar()
 
         self.resources_action = QAction("Resources",self)
@@ -55,6 +69,10 @@ class Demo(QMainWindow):
         self.help_action = QAction("Help",self)
         self.save_action = QAction("Save",self)
         self.choice_action = QAction("Choice",self)
+        self.exam_score_action = QAction('Exam Score',self)
+        self.question_knowledge_action = QAction('Question Knowledge',self)
+        self.knowledge_conversion_action = QAction('Knowledge Conversion',self)
+        self.action_action = QAction('Student Action',self)
 
         self.set_center()
 
@@ -80,6 +98,11 @@ class Demo(QMainWindow):
         self.help_bar.addAction(self.help_action)
         self.save_bar.addAction(self.save_action)
         self.choice_bar.addAction(self.choice_action)
+
+        self.exam_score_bar.addAction(self.exam_score_action)
+        self.question_knowledge_bar.addAction(self.question_knowledge_action)
+        self.knowledge_conversion_bar.addAction(self.knowledge_conversion_action)
+        self.action_bar.addAction(self.action_action)
 
     def status_bar_init(self):
         self.status_bar.showMessage("Ready to compose")
@@ -119,16 +142,70 @@ class Demo(QMainWindow):
         self.choice_action.setStatusTip("Choice Something[Ctrl+s]")
         self.choice_action.triggered.connect(self.add_choice)
 
+        self.exam_score_action.setShortcut('Exam Score')
+        self.exam_score_action.setToolTip("Student Exam Score")
+        self.exam_score_action.setStatusTip("Student Exam Score[Ctrl+E]")
+        self.exam_score_action.triggered.connect(self.add_exam_score)
+
+        self.question_knowledge_action.setShortcut('Question Knowledge')
+        self.question_knowledge_action.setToolTip("Knowledge And Question Connect")
+        self.question_knowledge_action.setStatusTip("Knowledge and Question[Ctrl+K+Q]")
+        self.question_knowledge_action.triggered.connect(self.add_question_knowledge)
+
+        self.knowledge_conversion_action.setShortcut('Knowledge Conversion')
+        self.knowledge_conversion_action.setToolTip("Student Exam Score")
+        self.knowledge_conversion_action.setStatusTip("Student Exam Score[Ctrl+E]")
+        self.knowledge_conversion_action.triggered.connect(self.add_knowledge_conversion)
+
+        self.action_action.setShortcut('Student Action')
+        self.action_action.setToolTip("Student Exam Score")
+        self.action_action.setStatusTip("Student Exam Score[Ctrl+E]")
+        self.action_action.triggered.connect(self.add_action)
+
+    def add_exam_score(self):
+        file_name,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.csv)')
+
+        if file_name:
+            self.exam_score_path = file_name
+
+    def add_question_knowledge(self):
+        file_name,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.csv)')
+
+        if file_name:
+            self.question_knowledge_path = file_name
+
+    def add_knowledge_conversion(self):
+        file_name,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.csv)')
+
+        if file_name:
+            self.knowledge_conversion_path = file_name
+
+    def add_action(self):
+        file_name,_ = QFileDialog.getOpenFileName(self,'Open File','../','Files(*.csv)')
+
+        if file_name:
+            self.action_path = file_name
+
     def add_choice(self):
         self.choice_page = UserChoice()
         self.choice_page.dialog_signal.connect(self.add_choice_deal)
 
-        self.choice_page.show()
+        if self.question_knowledge_path != '' and self.exam_score_path != '' and \
+            self.action_path != '' and self.knowledge_path != '' and self.teacher_path != '' and self.knowledge_conversion_path != '' and \
+            self.student_resources_path != '':
+            self.choice_page.show()
+            print(self.exam_score_path,self.knowledge_conversion_path,self.question_knowledge_path,self.action_path,self.student_resources_path,self.teacher_path,self.knowledge_path)
 
-    def add_choice_deal(self,Algorithm:str,UserId:int,RecommandNum:int):
+    def add_choice_deal(self,Algorithm:str,UserId:int,RecommandNum:int,RecommandTeacher):
+        # 在这里获取了用户选择了东西 分别是选择的算法 选择的用户id 选择的推荐知识数量 推荐老师数量
         self.Algorithm = Algorithm
         self.UserId = UserId
         self.RecommandNum = RecommandNum
+        self.RecommandNumTeacher = RecommandTeacher
+
+        tmp = []
+
+        self.user_data_form.UserResultPageChange(tmp,0,0,"1","SimAls1")
 
     def add_resources(self):
         # 打开json文件 对应resources文件夹
@@ -163,8 +240,6 @@ class Demo(QMainWindow):
             self.teacher_path = file
 
             self.teacher_list = [[0 for i in range(self.teacher.shape[1])] for i in range(self.teacher.shape[0])]
-
-            self.student_resources = json.loads(content)
 
             for i in range(self.teacher.shape[0]):
                 for j in range(self.teacher.shape[1]):
@@ -221,8 +296,7 @@ class Demo(QMainWindow):
 
         self.dock_window.setWidget(self.user_data_form)
 
-        print(self.dock_window.minimumSize().width())
-        self.dock_window.setFixedWidth(480)
+        self.dock_window.setFixedWidth(1200)
         self.addDockWidget(Qt.LeftDockWidgetArea,self.dock_window)
 
 if __name__ == "__main__":
