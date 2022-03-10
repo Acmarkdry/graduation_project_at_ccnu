@@ -96,7 +96,7 @@ class Information(QTabWidget):
         row_name = []
 
         for i in range(1,len(vec[0])):
-            name.append(str("Teacher") + str(i))
+            name.append(str("Knowledge") + str(i))
 
         for i in range(1,len(vec)):
             row_name.append(str("Student") + str(i))

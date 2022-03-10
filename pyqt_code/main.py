@@ -15,9 +15,6 @@ from UserChoice import UserChoice
 
 class Demo(QMainWindow):
     """
-    功能需求
-    需要一个 resources导入 teacher 导入 knowledge 导入 一个help导入
-    还有一个保存结果
 
     左边需要三个算法选择 一个用户名称选择 推荐知识个数 推荐老师个数
     右边显示多个页面，分别是导入的resources teacher knowledge 以及最后的推荐结果
